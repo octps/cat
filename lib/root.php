@@ -25,10 +25,12 @@
           throw new RuntimeException('画像形式が未対応です');
       }
 
+      $filename = sha1($_FILES['image']['tmp_name'] . date( "Y/m/d (D) H:i:s", time() ) . rand());
+
       if (!move_uploaded_file(
         $_FILES['image']['tmp_name'],
         $path = sprintf('./images/%s%s',
-              sha1_file($_FILES['image']['tmp_name']),
+              $filename,
               image_type_to_extension($type)
         )
       )) {
