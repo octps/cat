@@ -33,6 +33,18 @@
             icon: icon
         });
 
+        var myLatlng = new google.maps.LatLng(33.54661,133.57790);
+        var icon = new google.maps.MarkerImage('images/sample.png',
+          new google.maps.Size(73,51),
+          new google.maps.Point(0,0),
+          new google.maps.Point(19,51)
+        );
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            icon: icon
+        });   
+
     }
 
 
