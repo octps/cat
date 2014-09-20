@@ -42,12 +42,13 @@
       print_r($path);
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
+      $iconSize = getSize ($exif);
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
     }
   }
 
-  function getGPS ($exif){
+  function getGPS ($exif) {
     $GPSLatitude0 = intval(str_replace('/1', '', $exif['GPSLatitude'][0]));
     $GPSLatitude1 = intval(str_replace('/1', "", $exif['GPSLatitude'][1])) / 60;
     $GPSLatitude2 = $exif['GPSLatitude'][2] / 100 / 60 / 60;
@@ -62,5 +63,21 @@
 
     return $GPS;
   }
+
+  function getSize($exif) {
+    $height = $exif['COMPUTED']['Height'];
+    $width = $exif['COMPUTED']['Width'];
+    $size = $width;
+    if (intval($height) > intval($width)) {
+      $size = $height;
+    };
+    $sizes = array(
+      'size' => $size,
+      'height' => $height,
+      'width' => $width
+    );
+
+    return $sizes;
+  };
 
 ?>

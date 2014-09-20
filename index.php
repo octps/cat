@@ -22,10 +22,16 @@
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
 
         var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
+        var iconSize = 80;
+        var scale = iconSize / <?= $iconSize['size'] ?>;
+        var iconHeight = <?= $iconSize['height'] ?> * scale;
+        var iconWidth = <?= $iconSize['width'] ?> * scale;
+
         var icon = new google.maps.MarkerImage('<?= $path ?>',
-          new google.maps.Size(73,51),
+          new google.maps.Size(iconSize,iconSize),
           new google.maps.Point(0,0),
-          new google.maps.Point(19,51)
+          new google.maps.Point(19,51),
+          new google.maps.Size(iconWidth, iconHeight)
         );
         var marker = new google.maps.Marker({
             position: myLatlng,
@@ -43,7 +49,7 @@
             position: myLatlng,
             map: map,
             icon: icon
-        });   
+        }); 
 
     }
 
@@ -67,6 +73,7 @@
 cat
 </header>
 <div class="body">
+  <img src="images/bdb2f27c0b753cb1601b1eedd26a81b18cb7ea55.jpeg">
     <form action="/" method="post" enctype="multipart/form-data">
         <input name="title" type="text" value="">
         <input name="image" type="file" value="">
