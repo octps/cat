@@ -15,14 +15,14 @@
     function initialize() { 
         var latlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>); 
         var myOptions = { 
-          zoom: 18, 
+          zoom: 18,
           center: latlng, 
           mapTypeId: google.maps.MapTypeId.SATELLITE
         }; 
         var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
 
         var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
-        var icon = new google.maps.MarkerImage('images/sample.png',
+        var icon = new google.maps.MarkerImage('<?= $path ?>',
           new google.maps.Size(73,51),
           new google.maps.Point(0,0),
           new google.maps.Point(19,51)
@@ -30,9 +30,9 @@
         var marker = new google.maps.Marker({
             position: myLatlng,
             map: map,
-            icon: icon,
-            title:"this"
-        });   
+            icon: icon
+        });
+
     }
 
 
