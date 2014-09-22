@@ -24,7 +24,7 @@
         );
 
 
-        window.drawMap = function () {
+        window.drawMap = function (myPosition) {
           var latlng = new google.maps.LatLng(myPosition.latitude, myPosition.longitude); 
           var myOptions = { 
             zoom: 18,
