@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <title>cat</title>
-  <link href="css/base.css" rel="stylesheet">
+  <!-- <link href="css/base.css" rel="stylesheet"> -->
   <meta name="keywords" content="">
   <meta name="description" content="">
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
@@ -23,11 +23,10 @@
           }
         );
 
-
         window.drawMap = function (myPosition) {
           var latlng = new google.maps.LatLng(myPosition.latitude, myPosition.longitude); 
           var myOptions = { 
-            zoom: 18,
+            zoom: 14,
             center: latlng, 
             mapTypeId: google.maps.MapTypeId.SATELLITE
           }; 
@@ -45,7 +44,7 @@
             new google.maps.Point(19,51),
             new google.maps.Size(iconWidth, iconHeight)
           );
-          var marker = new google.maps.Marker({
+          var marker1 = new google.maps.Marker({
               position: myLatlng,
               map: map,
               icon: icon
@@ -57,12 +56,20 @@
             new google.maps.Point(0,0),
             new google.maps.Point(19,51)
           );
-          var marker = new google.maps.Marker({
+          var marker2 = new google.maps.Marker({
               position: myLatlng,
               map: map,
               icon: icon
           });
+
+          google.maps.event.addListener(marker1, 'click', clickEventFunc);
+          
+          function clickEventFunc(event) {
+              location.href="http://www.yahoo.co.jp/"
+          }
+
         }
+
     }
 
   </script>
