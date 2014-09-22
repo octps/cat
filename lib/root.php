@@ -1,4 +1,16 @@
 <?php
+  include_once(dirname(__FILE__)."/Db.php");
+
+  $dbh = \Db::getInstance();
+  $dbh->beginTransaction();
+  $sth = $dbh->prepare("SELECT * FROM images");
+  $sth->execute();
+  $dbh->commit();
+
+  while ($image = $sth->fetchObject()) {
+    $images[] = $image;
+  }
+
   if(isset($_FILES['image']['error']) && is_int($_FILES['image']['error'])) {
     try {
       switch ($_FILES['image']['error']) {

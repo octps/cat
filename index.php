@@ -65,7 +65,7 @@
           google.maps.event.addListener(marker1, 'click', clickEventFunc);
           
           function clickEventFunc(event) {
-              location.href="http://www.yahoo.co.jp/"
+              location.href = "http://www.yahoo.co.jp/"
           }
 
         }
