@@ -54,6 +54,20 @@
       print_r($path);
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
+
+      /* DBに登録 */
+      $sql = "INSERT INTO images (
+        user_id, path, caption, geo_lat, geo_long, width, height, created_at, modifed_at
+      ) VALUES (
+        1001, :path, 'テスト', :geo_lat, :geo_long, :width, :height, null, now());";
+      $stmt = $dbh -> prepare($sql);
+      $stmt->bindParam(':path', $path);
+      $stmt->bindParam(':geo_lat', $mapValue[0]);
+      $stmt->bindParam(':geo_long', $mapValue[1]);
+      $stmt->bindParam(':width', $exif['COMPUTED']['Width']);
+      $stmt->bindParam(':height', $exif['COMPUTED']['Height']);
+      $stmt->execute();
+
       $iconSize = getSize ($exif);
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
