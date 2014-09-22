@@ -9,6 +9,7 @@
 
   while ($image = $sth->fetchObject()) {
     $images[] = $image;
+    $sizes[] = getSizes($image);
   }
 
   if(isset($_FILES['image']['error']) && is_int($_FILES['image']['error'])) {
@@ -54,6 +55,7 @@
       print_r($path);
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
+      $iconSize = getSize ($exif);
 
       /* DBに登録 */
       $sql = "INSERT INTO images (
@@ -68,7 +70,6 @@
       $stmt->bindParam(':height', $exif['COMPUTED']['Height']);
       $stmt->execute();
 
-      $iconSize = getSize ($exif);
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
     }
@@ -89,6 +90,22 @@
 
     return $GPS;
   }
+
+  function getSizes($image) {
+    $height = $image->height;
+    $width = $image->width;
+    $size = $width;
+    if (intval($height) > intval($width)) {
+      $size = $height;
+    };
+    $sizes = array(
+      'size' => $size,
+      'height' => $height,
+      'width' => $width
+    );
+
+    return $sizes;
+  };
 
   function getSize($exif) {
     $height = $exif['COMPUTED']['Height'];
