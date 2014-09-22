@@ -10,60 +10,61 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-
   <script type="text/javascript">
-    function initialize() { 
-        var latlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>); 
-        var myOptions = { 
-          zoom: 18,
-          center: latlng, 
-          mapTypeId: google.maps.MapTypeId.SATELLITE
-        }; 
-        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
+    function initialize() {
 
-        var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
-        var iconSize = 80;
-        var scale = iconSize / <?= $iconSize['size'] ?>;
-        var iconHeight = <?= $iconSize['height'] ?> * scale;
-        var iconWidth = <?= $iconSize['width'] ?> * scale;
-
-        var icon = new google.maps.MarkerImage('<?= $path ?>',
-          new google.maps.Size(iconSize,iconSize),
-          new google.maps.Point(0,0),
-          new google.maps.Point(19,51),
-          new google.maps.Size(iconWidth, iconHeight)
+        navigator.geolocation.getCurrentPosition(
+          function(position){
+            myPosition = {
+              latitude : position.coords.latitude,
+              longitude : position.coords.longitude
+            };
+            window.drawMap(myPosition);
+          }
         );
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            icon: icon
-        });
 
-        var myLatlng = new google.maps.LatLng(33.54661,133.57790);
-        var icon = new google.maps.MarkerImage('images/sample.png',
-          new google.maps.Size(73,51),
-          new google.maps.Point(0,0),
-          new google.maps.Point(19,51)
-        );
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            icon: icon
-        }); 
 
+        window.drawMap = function () {
+          var latlng = new google.maps.LatLng(myPosition.latitude, myPosition.longitude); 
+          var myOptions = { 
+            zoom: 18,
+            center: latlng, 
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+          }; 
+          var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
+
+          var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
+          var iconSize = 80;
+          var scale = iconSize / <?= $iconSize['size'] ?>;
+          var iconHeight = <?= $iconSize['height'] ?> * scale;
+          var iconWidth = <?= $iconSize['width'] ?> * scale;
+
+          var icon = new google.maps.MarkerImage('<?= $path ?>',
+            new google.maps.Size(iconSize,iconSize),
+            new google.maps.Point(0,0),
+            new google.maps.Point(19,51),
+            new google.maps.Size(iconWidth, iconHeight)
+          );
+          var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map,
+              icon: icon
+          });
+
+          var myLatlng = new google.maps.LatLng(33.54661,133.57790);
+          var icon = new google.maps.MarkerImage('images/sample.png',
+            new google.maps.Size(73,51),
+            new google.maps.Point(0,0),
+            new google.maps.Point(19,51)
+          );
+          var marker = new google.maps.Marker({
+              position: myLatlng,
+              map: map,
+              icon: icon
+          });
+        }
     }
 
-
-    // google.maps.event.addDomListener(window, 'load', function() {
-    //   var map = document.getElementById("gmap");
-    //   var options = {
-    //     zoom: 18,
-    //     center: new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>),
-        
-    //     mapTypeId: google.maps.MapTypeId.SATELLITE
-    //   };
-    //   new google.maps.Map(map, options);
-    // });
   </script>
 
 </head>
@@ -73,7 +74,6 @@
 cat
 </header>
 <div class="body">
-  <img src="images/bdb2f27c0b753cb1601b1eedd26a81b18cb7ea55.jpeg">
     <form action="/" method="post" enctype="multipart/form-data">
         <input name="title" type="text" value="">
         <input name="image" type="file" value="">
