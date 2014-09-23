@@ -24,13 +24,20 @@
         );
 
         window.drawMap = function (myPosition) {
+          //現在地
           var latlng = new google.maps.LatLng(myPosition.latitude, myPosition.longitude); 
           var myOptions = { 
             zoom: 14,
             center: latlng, 
             mapTypeId: google.maps.MapTypeId.SATELLITE
           }; 
-          var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions); 
+          var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+          var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: '現在地'
+            });
+          //現在地
 
           var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
           var iconSize = 80;
