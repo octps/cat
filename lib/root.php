@@ -52,10 +52,10 @@
 
       chmod($path, 0644);
       $msg = array('green', 'ファイルは正常にアップロードされました');
-      print_r($path);
+      // print_r($path);
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
-      $iconSize = getSize ($exif);
+      // $iconSize = getSize ($exif);
 
       /* DBに登録 */
       $sql = "INSERT INTO images (
@@ -73,6 +73,8 @@
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
     }
+
+    header("Location: /");
   }
 
   function getGPS ($exif) {
@@ -107,20 +109,20 @@
     return $sizes;
   };
 
-  function getSize($exif) {
-    $height = $exif['COMPUTED']['Height'];
-    $width = $exif['COMPUTED']['Width'];
-    $size = $width;
-    if (intval($height) > intval($width)) {
-      $size = $height;
-    };
-    $sizes = array(
-      'size' => $size,
-      'height' => $height,
-      'width' => $width
-    );
+  // function getSize($exif) {
+  //   $height = $exif['COMPUTED']['Height'];
+  //   $width = $exif['COMPUTED']['Width'];
+  //   $size = $width;
+  //   if (intval($height) > intval($width)) {
+  //     $size = $height;
+  //   };
+  //   $sizes = array(
+  //     'size' => $size,
+  //     'height' => $height,
+  //     'width' => $width
+  //   );
 
-    return $sizes;
-  };
+  //   return $sizes;
+  // };
 
 ?>
