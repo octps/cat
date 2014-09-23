@@ -41,14 +41,18 @@
 
           <? foreach($images as $iamge): ?>
             var myLatlng = new google.maps.LatLng(<?= $iamge->geo_lat ?>, <?= $iamge->geo_long ?>);
-
+            // var myLatlng = new google.maps.LatLng(<?= $mapValue[0] ?>, <?= $mapValue[1] ?>);
             var iconSize = 80;
+            // var scale = iconSize / <?= $iconSize['size'] ?>;
+            // var iconHeight = <?= $iconSize['height'] ?> * scale;
+            // var iconWidth = <?= $iconSize['width'] ?> * scale;
 
             var icon = new google.maps.MarkerImage('<?= $iamge->path ?>',
               new google.maps.Size(iconSize,iconSize),
               new google.maps.Point(0,0),
               new google.maps.Point(19,51),
               new google.maps.Size(iconSize,iconSize)
+              // new google.maps.Size(iconWidth, iconHeight)
             );
             var marker1 = new google.maps.Marker({
                 position: myLatlng,
@@ -57,6 +61,23 @@
             });
           <? endforeach ?>
 
+          // var myLatlng = new google.maps.LatLng(33.54661,133.57790);
+          // var icon = new google.maps.MarkerImage('images/sample.png',
+          //   new google.maps.Size(73,51),
+          //   new google.maps.Point(0,0),
+          //   new google.maps.Point(19,51)
+          // );
+          // var marker2 = new google.maps.Marker({
+          //     position: myLatlng,
+          //     map: map,
+          //     icon: icon
+          // });
+
+          // google.maps.event.addListener(marker1, 'click', clickEventFunc);
+          
+          // function clickEventFunc(event) {
+          //     location.href = "http://www.yahoo.co.jp/"
+          // }
 
         }
 
