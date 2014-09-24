@@ -9,8 +9,9 @@
 
   while ($image = $sth->fetchObject()) {
     $images[] = $image;
-    $sizes[] = getSizes($image);
   }
+  echo(json_encode($images));
+
 
   if(isset($_FILES['image']['error']) && is_int($_FILES['image']['error'])) {
     try {
@@ -52,10 +53,8 @@
 
       chmod($path, 0644);
       $msg = array('green', 'ファイルは正常にアップロードされました');
-      // print_r($path);
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
-      // $iconSize = getSize ($exif);
 
       /* DBに登録 */
       $sql = "INSERT INTO images (
@@ -73,8 +72,6 @@
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
     }
-
-    header("Location: /");
   }
 
   function getGPS ($exif) {
@@ -92,37 +89,5 @@
 
     return $GPS;
   }
-
-  function getSizes($image) {
-    $height = $image->height;
-    $width = $image->width;
-    $size = $width;
-    if (intval($height) > intval($width)) {
-      $size = $height;
-    };
-    $sizes = array(
-      'size' => $size,
-      'height' => $height,
-      'width' => $width
-    );
-
-    return $sizes;
-  };
-
-  // function getSize($exif) {
-  //   $height = $exif['COMPUTED']['Height'];
-  //   $width = $exif['COMPUTED']['Width'];
-  //   $size = $width;
-  //   if (intval($height) > intval($width)) {
-  //     $size = $height;
-  //   };
-  //   $sizes = array(
-  //     'size' => $size,
-  //     'height' => $height,
-  //     'width' => $width
-  //   );
-
-  //   return $sizes;
-  // };
 
 ?>
