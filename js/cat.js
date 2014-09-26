@@ -10,7 +10,8 @@ function initialize() {
       }
     );
 
-    window.myMapPosition = function (myPosition) {
+    window.myMapPosition = function(myPosition) {
+
       //現在地
       var latlng = new google.maps.LatLng(myPosition.latitude, myPosition.longitude); 
       var myOptions = { 
@@ -43,8 +44,12 @@ function initialize() {
         });
     }
 
+
     window.drowingPoting = function(postings) {
+      var marker = new Array();
+      // var href = new Array();
       for (var i = 0; i < postings.length; i++) {
+
         var myLatlng = new google.maps.LatLng(postings[i]['geo_lat'], postings[i]['geo_long']);
         var iconSize = 80;
         var scaleLong = postings[i]['width'];
@@ -61,12 +66,20 @@ function initialize() {
           new google.maps.Point(19,51),
           new google.maps.Size(iconWidth, iconHeight)
         );
-        var marker1 = new google.maps.Marker({
+        marker.push(new google.maps.Marker({
             position: myLatlng,
             map: window.map,
             icon: icon
+        }));
+        var contentString = "<a href='http://google.co.jp/?test=" + i + "'>テスト1</a>";
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString1
+        });
+        google.maps.event.addListener(marker[i], 'click', function() {
+              infowindow.open(map,marker[i]);
         });
       }
     }
+
 
 }
