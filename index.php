@@ -16,9 +16,11 @@
 cat
 </header>
 <div class="body">
-    <form action="/" method="post" enctype="multipart/form-data">
+
+    <form action="/lib/imagepost.php" method="post" enctype="multipart/form-data">
         <input name="title" type="text" value="">
-        <input name="image" type="file" value="">
+        <input type="file" name="image" accept="image/*">
+        <!-- <input name="image" type="file" value=""> -->
         <input type="submit" value="送信">
     </form>
     <div id="map_canvas" style="width : 500px; height : 500px;">

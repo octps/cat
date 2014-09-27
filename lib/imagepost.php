@@ -1,17 +1,6 @@
 <?php
   include_once(dirname(__FILE__)."/Db.php");
-
   $dbh = \Db::getInstance();
-  $dbh->beginTransaction();
-  $sth = $dbh->prepare("SELECT * FROM images");
-  $sth->execute();
-  $dbh->commit();
-
-  while ($image = $sth->fetchObject()) {
-    $images[] = $image;
-  }
-  echo(json_encode($images));
-
 
   if(isset($_FILES['image']['error']) && is_int($_FILES['image']['error'])) {
     try {
@@ -43,7 +32,7 @@
 
       if (!move_uploaded_file(
         $_FILES['image']['tmp_name'],
-        $path = sprintf('./images/%s%s',
+        $path = sprintf('../images/%s%s',
               $filename,
               image_type_to_extension($type)
         )
@@ -72,6 +61,7 @@
     } catch (RuntimeException $e) {
       $msg = array('red', $e->getMessage());
     }
+    header("Location: /");
   }
 
   function getGPS ($exif) {

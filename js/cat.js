@@ -31,7 +31,7 @@ function initialize() {
 
     window.drawPosting = function() {
       $.ajax({
-        url: './lib/root.php',
+        url: './lib/drawmap.php',
         dataType: "json",
         cache: false,
         success: function(data){
@@ -73,7 +73,7 @@ function initialize() {
         }));
         var contentString = "<a href='http://google.co.jp/?test=" + i + "'>テスト1</a>";
         var infowindow = new google.maps.InfoWindow({
-            content: contentString1
+            content: contentString
         });
         google.maps.event.addListener(marker[i], 'click', function() {
               infowindow.open(map,marker[i]);
