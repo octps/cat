@@ -81,5 +81,23 @@ function initialize() {
       }
     }
 
+}
 
+function geoPost() {
+    // var url = jQuery(form).attr('action')
+    //     , method = jQuery(form).attr('method')
+    //     , data = jQuery(form).serializeArray();
+    
+    navigator.geolocation.getCurrentPosition(
+      function(position){
+        myPosition = {
+          latitude : position.coords.latitude,
+          longitude : position.coords.longitude
+        };
+      }
+    );
+    jQuery('#imageform [name=lat]').val(myPosition.latitude);
+    jQuery('#imageform [name=long]').val(myPosition.longitude);
+
+    jQuery('#imageform').submit();
 }

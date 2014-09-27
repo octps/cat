@@ -17,9 +17,11 @@ cat
 </header>
 <div class="body">
 
-    <form action="/lib/imagepost.php" method="post" enctype="multipart/form-data">
+    <form id="imageform" action="/lib/imagepost.php" method="post" enctype="multipart/form-data" onsubmit="geoPost(); return false;">
         <input name="title" type="text" value="">
         <input type="file" name="image" accept="image/*">
+        <input type="hidden" name="lat" value="">
+        <input type="hiddne" name="long" value="">
         <!-- <input name="image" type="file" value=""> -->
         <input type="submit" value="送信">
     </form>

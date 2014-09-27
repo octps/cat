@@ -44,6 +44,10 @@
       $msg = array('green', 'ファイルは正常にアップロードされました');
       $exif = exif_read_data($path);
       $mapValue = getGPS ($exif);
+      if($mapValue[0] == false || $mapValue[1] == false ) {
+        $mapValue[0] = $_POST["lat"];
+        $mapValue[1] = $_POST["long"];
+      }
 
       /* DBに登録 */
       $sql = "INSERT INTO images (
@@ -65,19 +69,22 @@
   }
 
   function getGPS ($exif) {
-    $GPSLatitude0 = intval(str_replace('/1', '', $exif['GPSLatitude'][0]));
-    $GPSLatitude1 = intval(str_replace('/1', "", $exif['GPSLatitude'][1])) / 60;
-    $GPSLatitude2 = $exif['GPSLatitude'][2] / 100 / 60 / 60;
-    $GPSLatitude = $GPSLatitude0 + $GPSLatitude1 + $GPSLatitude2;
+    if(empty($exif['GPSLatitude'][0]) === false) {
+      $GPSLatitude0 = intval(str_replace('/1', '', $exif['GPSLatitude'][0]));
+      $GPSLatitude1 = intval(str_replace('/1', "", $exif['GPSLatitude'][1])) / 60;
+      $GPSLatitude2 = $exif['GPSLatitude'][2] / 100 / 60 / 60;
+      $GPSLatitude = $GPSLatitude0 + $GPSLatitude1 + $GPSLatitude2;
 
-    $GPSLongitude0 = intval(str_replace('/1', '', $exif['GPSLongitude'][0]));
-    $GPSLongitude1 = intval(str_replace('/1', "", $exif['GPSLongitude'][1])) / 60;
-    $GPSLongitude2 = $exif['GPSLongitude'][2] / 100 / 60 / 60;
-    $GPSLongitude = $GPSLongitude0 + $GPSLongitude1 + $GPSLongitude2;
-    $GPS[0] = $GPSLatitude;
-    $GPS[1] = $GPSLongitude;
+      $GPSLongitude0 = intval(str_replace('/1', '', $exif['GPSLongitude'][0]));
+      $GPSLongitude1 = intval(str_replace('/1', "", $exif['GPSLongitude'][1])) / 60;
+      $GPSLongitude2 = $exif['GPSLongitude'][2] / 100 / 60 / 60;
+      $GPSLongitude = $GPSLongitude0 + $GPSLongitude1 + $GPSLongitude2;
+      $GPS[0] = $GPSLatitude;
+      $GPS[1] = $GPSLongitude;
 
-    return $GPS;
+      return $GPS;
+    }
+    return false;
   }
 
 ?>
