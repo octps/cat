@@ -31,7 +31,7 @@ function initialize() {
 
     window.drawPosting = function() {
       $.ajax({
-        url: './lib/root.php',
+        url: './lib/drawmap.php',
         dataType: "json",
         cache: false,
         success: function(data){
