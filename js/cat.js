@@ -31,7 +31,7 @@ function initialize() {
 
     window.drawPosting = function() {
       $.ajax({
-        url: './lib/drawmap.php',
+        url: './lib/root.php',
         dataType: "json",
         cache: false,
         success: function(data){
@@ -47,7 +47,7 @@ function initialize() {
 
     window.drowingPoting = function(postings) {
       var marker = new Array();
-      // var href = new Array();
+      // var infowindow = new Array();
       for (var i = 0; i < postings.length; i++) {
 
         var myLatlng = new google.maps.LatLng(postings[i]['geo_lat'], postings[i]['geo_long']);
@@ -71,33 +71,18 @@ function initialize() {
             map: window.map,
             icon: icon
         }));
-        var contentString = "<a href='http://google.co.jp/?test=" + i + "'>テスト1</a>";
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
+        var contentString = "<a href='http://google.co.jp/?test=" + i + "'>テスト" + i + "</a>";
+        marker[i].contentString = contentString;
         google.maps.event.addListener(marker[i], 'click', function() {
-              infowindow.open(map,marker[i]);
+            var latlng = new google.maps.LatLng(this.position.k, this.position.B);
+            var infowindow = new google.maps.InfoWindow({
+              content: this.contentString,
+              position: latlng
+            });
+            infowindow.open(map,marker[i]);
         });
       }
     }
 
-}
 
-function geoPost() {
-    // var url = jQuery(form).attr('action')
-    //     , method = jQuery(form).attr('method')
-    //     , data = jQuery(form).serializeArray();
-    
-    navigator.geolocation.getCurrentPosition(
-      function(position){
-        myPosition = {
-          latitude : position.coords.latitude,
-          longitude : position.coords.longitude
-        };
-      }
-    );
-    jQuery('#imageform [name=lat]').val(myPosition.latitude);
-    jQuery('#imageform [name=long]').val(myPosition.longitude);
-
-    jQuery('#imageform').submit();
 }
